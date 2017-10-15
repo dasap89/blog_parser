@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Python blog parser</title>
+       <link rel="stylesheet" media="screen" href ="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+
+<div class="container">
+
+  <h2>Python blog parser</h2>
+    {% if categories %}
+        <h3><a href="{{ url_for('categories') }}">Total categories -- {{ categories }}</a></h3>
+      {% else %}
+        <h3> No categories, you should press "Parse button"</h3>
+      {% endif %}
+    {% if articles %}
+        <h3><a href="{{ url_for('articles')}}">Total articles -- {{ articles }}</a></h3>
+      {% else %}
+        <h3> No articles, you should press "Parse button"</h3>
+      {% endif %}
+  <form  action="/" method="POST" role="form">
+
+      <button type="submit" class="btn btn-success">{% if (categories and articles) %}
+          Parse again
+      {% else %}
+          Parse
+      {% endif %}</button>
+  </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+        {% for message in messages %}
+            {% if "Error" not in message[1] %}
+                <div class="alert alert-info">
+                <strong>Success! </strong> {{ message[1] }}
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+  <br>
+</div>
+
+</body>
+</html>
