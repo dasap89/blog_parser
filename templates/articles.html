@@ -12,12 +12,17 @@
 
 <div class="container">
 
-  <h2>Python blog parser.{% if category %} Category <b>{{ category }}</b>{% endif %}</h2>
+  <h2>Python blog parser.{% if category %} Category <b>{{ category.title }}</b>{% endif %}</h2>
     {% if articles %}
         {% for article in articles %}
-            <div>Show article text:</div>
+            <div>Show article title:</div>
             <div><a href="{{ url_for('articles',article=article.id) }}">
                 {{article.title}}</a></div>
+            <div>Categories:
+            {% for category in article.categories %}
+            {{category.title}} 
+            {% endfor %}
+            </div>
             <div>Redirect to origin article page:</div>
             <div><a href="{{article.url_article}}">{{article.url_article}}</a></div>
             <br/>
