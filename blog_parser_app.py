@@ -153,17 +153,6 @@ def categories():
     categories page
     :return: list all categories from db
     """
-    # category = request.args.get("category", None)
-    # print category
-    # if category:
-    #     try:
-    #         category = Categories.objects.get(title=category)
-    #         print category
-    #         articles = Articles.objects.filter(categories__in=[category])
-    #     except Exception:
-    #         abort(404)
-    #     return render_template('categories.html', categories=category, articles=articles)
-    # else:
     categories = Categories.objects()
     return render_template('categories.html', categories=categories)
 
@@ -188,11 +177,7 @@ def articles():
             articles = Articles.objects()
     except Exception:
         abort(404)
-    return render_template(
-        'articles.html',
-        articles=articles,
-        category=category
-    )
+    return render_template('articles.html', articles=articles, category=category)
 
 
 # APIs
@@ -200,9 +185,8 @@ def articles():
 @app.route('/api/categories/', methods=['GET'])
 def api_get_categories():
     """
-    articles page
-    :return all articles from db, or current articles with current category,
-    or current article(dependency from request params)
+    api for getting list of categories
+    :return all categories from db
     """
     categories = Categories.objects()
     return jsonify({'categories': categories})
@@ -211,9 +195,9 @@ def api_get_categories():
 @app.route('/api/categories/<string:category_name>', methods=['GET'])
 def api_get_articles_by_category(category_name):
     """
-    articles page
-    :return all articles from db, or current articles with current category,
-    or current article(dependency from request params)
+    api that retrun articles by provided category
+    Example: "/api/categories/aws'
+    :return articles from db for provided category
     """
     category = Categories.objects.get(title=category_name)
     articles = Articles.objects.filter(categories__in=[category])
@@ -223,15 +207,19 @@ def api_get_articles_by_category(category_name):
 @app.route('/api/articles/', methods=['GET'])
 def api_get_articles():
     """
-    articles page
-    :return all articles from db, or current articles with current category,
-    or current article(dependency from request params)
+    api that return list of all articles from db
+    :return all articles from db
     """
     articles = Articles.objects()
     return jsonify({'articles': articles})
 
+
 @app.route('/api/articles/<string:article_id>', methods=['GET'])
 def api_get_one_article(article_id):
+    """
+    api that return information according to separate article by its id
+    :return single article by id
+    """
     try:
         article_id = ObjectId(article_id)
         article = Articles.objects.get(id=article_id)
