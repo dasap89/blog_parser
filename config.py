@@ -12,7 +12,6 @@ class BaseConfig:
 class ProductionConfig(BaseConfig):
     DEBUG = False
 
-    # MONGO DB SETTINGS
     MONGODB_SETTINGS = {
         'db': 'blog',
         'host': '127.0.0.1',
