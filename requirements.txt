@@ -9,7 +9,7 @@ Flask-WTF==0.14.2
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.9.6
-lxml==4.0.0
+lxml==4.6.5
 MarkupSafe==1.0
 mccabe==0.6.1
 mongoengine==0.14.3
